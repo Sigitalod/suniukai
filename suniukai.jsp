@@ -13,9 +13,9 @@
 	
 </style>
 
-	</head>
 	
-	<body>
+	
+	
 	
 		<%@page  language="java" import="commons.Crud1" %>
 		
@@ -35,10 +35,17 @@
 							
 %>
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		
-
 <script>
-		function iRedagavima ( id_rec ) {
+		
+	$(document).ready(function(){
+	
+		$('.record_edit').click(function(){
+		
+			//id_rec=$(this).data('id_suniuko');
+			id_rec=$(this).data('id_rec');
 		
 			if (mygtukas = document.getElementById ('toEdit_' + id_rec) ) {
 <%				
@@ -50,9 +57,9 @@
 %>
 				
 				document.getElementById( "id_suniuko" ).value = id_rec;
-				
 			}
-		}
+		});
+	});		
 		
 			function iValyma () {
 <%
