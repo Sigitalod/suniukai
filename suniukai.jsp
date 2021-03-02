@@ -4,19 +4,51 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-<style>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<link href="font/css/all.min.css" rel="stylesheet" /> 
+		<link href="css/style.css" rel="stylesheet">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<style>
 	
-	th {
-
-		background-color: none;
-	}
+		label, input { display:block; }
+	
+		    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+		    fieldset { padding:0; border:0; margin-top:25px; }
+		    h1 { font-size: 1.2em; margin: .6em 0; }
+		    div#users-contain { width: 350px; margin: 20px 0; }
+		    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+		    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+		    .ui-dialog .ui-state-error { padding: .3em; }
+		    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+	    
+		#customers {
+		  font-family: Arial, Helvetica, sans-serif;
+		  border-collapse: collapse;
+		  width: 100%;
+		}
+		
+		#customers td, #customers th {
+		  border: 1px solid #ddd;
+		  padding: 8px;
+		}
+		
+		#customers tr:nth-child(even){background-color: #f2f2f2;}
+		
+		#customers tr:hover {background-color: #ddd;}
+		
+		#customers th {
+		  padding-top: 12px;
+		  padding-bottom: 12px;
+		  text-align: left;
+		  background-color: powderblue;
+		  color: white;
+		}
+	    
 	
 </style>
 
-	
-	
-	
-	
 		<%@page  language="java" import="commons.Crud1" %>
 		
 <%
@@ -39,8 +71,110 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		
 <script>
+
+	 $( function() {
+		var dialog, form,
 		
-	$(document).ready(function(){
+		emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+		id = $( "#id" ),
+		lytis = $( "#lytis" ),
+		gimimo_data = $( "#gimimo_data" ),
+		tevas = $( "#tevas" ),
+		mama = $( "#mama" ),
+		defektai = $( "#defektai" ),
+		paskirtis = $( "#paskirtis" ),
+		kaina = $( "#kaina" ),
+		allFields = $( [] ).add( id ).add( lytis ).add( gimimo_data ).add( tevas ).add( mama ).add(defektai).add(paskirtis).add(kaina),
+		tips = $( ".validateTips" );
+	
+	
+	
+	
+	 function updateTips( t ) {
+		tips
+		.text( t )
+		.addClass( "ui-state-highlight" );
+		
+			setTimeout(function() {
+		
+				tips.removeClass( "ui-state-highlight", 1500 );
+			}, 500 );
+	}
+	
+	 function checkLength( o, n, min, max ) {
+		if ( o.val().length > max || o.val().length < min ) {
+			o.addClass( "ui-state-error" );
+			updateTips( "Length of " + n + " must be between " +
+			min + " and " + max + "." );
+			return false;
+		
+		} else {
+			return true;
+		}
+	}
+	
+	function checkRegexp( o, regexp, n ) {
+		if ( !( regexp.test( o.val() ) ) ) {
+			o.addClass( "ui-state-error" );
+			updateTips( n );
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	function addUser() {
+		var valid = true;
+		allFields.removeClass( "ui-state-error" );
+	/*  
+		valid = valid && checkLength( lytis, "lytis", 1, 1000 );
+		valid = valid && checkLength( gimimo_data, "gimimo_data", 1, 10000 );
+		valid = valid && checkLength( tevas, "tevas", 1, 10000 );
+		valid = valid && checkLength( mama, "mama", 1, 1000 );
+		valid = valid && checkLength( defektai, "defektai", 1, 1000 );
+		valid = valid && checkLength( paskirtis, "paskirtis", 1, 1000 );
+		valid = valid && checkLength( kaina, "kaina", 1, 1000 );
+		
+		valid = valid && checkRegexp( lytis, /([0-9a-z_\s])+$/i, "Password field only allow : a-z 0-9" );
+		valid = valid && checkRegexp( gimimo_data, /([0-9a-z_\s])+$/i,"eg. ui@jquery.com" );
+		valid = valid && checkRegexp( tevas, /([0-9a-z_\s])+$/i, "Password field only allow : a-z 0-9" );
+		valid = valid && checkRegexp( mama, /([0-9a-z_\s])+$/i, "Password field only allow : a-z 0-9" );
+		valid = valid && checkRegexp( defektai, /([0-9a-z_\s])+$/i, "Password field only allow : a-z 0-9" );
+		valid = valid && checkRegexp( paskirtis, /([0-9a-z_\s])+$/i, "Password field only allow : a-z 0-9" );
+		valid = valid && checkRegexp( kaina, /([0-9a-z_\s])+$/i, "Password field only allow : a-z 0-9" );
+	*/	
+		if ( valid ) {
+		 console.log( $("#duomenys"));
+		  	 $("#duomenys").submit();
+			 alert("asdf")
+		
+		}
+	 	 
+			return valid;
+	}
+	dialog = $( "#dialog-form" ).dialog({
+			autoOpen: false,
+			height: 500,
+			width: 400,
+			modal: true,
+		buttons: {
+			"Saugoti": addUser,
+			"Atšaukti": function() {
+			dialog.dialog( "close" );
+			}
+		},
+		
+		 close: function() {
+			allFields.removeClass( "ui-state-error" );
+			}
+	});
+		
+		 $( "#create-user" ).button().on( "click", function() {
+			dialog.dialog( "open" );
+	  
+		});
+		
+	
 	
 		$('.record_edit').click(function(){
 		
@@ -190,8 +324,10 @@
 
 </table>
 
-	<div class="form">
-		<form action="" method="POST">
+	<div id="dialog-form"  title="Įvesti duomenis">
+	 <p class="validateTips">Privaloma užpildyti visus laukelius</p>
+		<form action="" method="POST" id="duomenys">
+		<fieldset>
 		<input type="text" name="lytis" id="lytis" value="" required placeholder="Lytis">
 		<input type="text" name="gimimo_data" id="gimimo_data" value="" required placeholder="Gimimo_data">
 		<input type="text" name="tevas" id="tevas" value="" required placeholder="Tevas">
@@ -199,19 +335,19 @@
 		<input type="text" name="defektai" id="defektai" value="" required placeholder="Defektai">
 		<input type="text" name="paskirtis" id="paskirtis" value="" required placeholder="Paskirtis">
 		<input type="text" name="kaina" id="kaina" value="" required placeholder="Kaina" >
-		<input type="submit" name="add" value="Papildyti" class="btn btn-primary">
 		<input type="hidden" id="id_suniuko" name="id_suniuko" value="0">
-		
+		<input type="hidden" name="add" value="ivesti">
+		<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+		</fieldset>
 	</form>
-
+</div>
 	<form id="del_rec" method="post" action="">
 	<input type="hidden" name="del" value="del1rec">
 	<input type="hidden" id="m_del" name="id_suniuko" value="0">
+	
 	</form>
-
-
-
-</table>
+	
+<button id="create-user">Pridėti šuniuką</button>
 
 </body>
 </html>
