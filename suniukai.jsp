@@ -341,6 +341,7 @@
 		</fieldset>
 	</form>
 </div>
+
 	<form id="del_rec" method="post" action="">
 	<input type="hidden" name="del" value="del1rec">
 	<input type="hidden" id="m_del" name="id_suniuko" value="0">
